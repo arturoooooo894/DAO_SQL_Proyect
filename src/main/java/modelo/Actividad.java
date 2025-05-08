@@ -32,5 +32,16 @@ public class Actividad {
 
     public double getCostoAdicional() { return costoAdicional; }
     public void setCostoAdicional(double costoAdicional) { this.costoAdicional = costoAdicional; }
+
+    @Override
+    public String toString() {
+        return "Actividad{" +
+                "id=" + id +
+                ", idPaquete=" + idPaquete +
+                ", nombre='" + nombre + '\'' +
+                ", descripcion='" + descripcion + '\'' +
+                ", costoAdicional=" + costoAdicional +
+                '}';
+    }
 }
 

@@ -12,22 +12,38 @@ public class ActividadSQL implements ActividadDAO {
 
     @Override
     public void insertar(Actividad actividad) {
-        String sql = "INSERT INTO Actividad (idPaquete, nombre, descripcion, costoAdicional) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO actividad (id_paquete, nombre, descripcion, costo_adicional) VALUES (?, ?, ?, ?)";
 
-        try (Connection conn = conexion.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (Connection conn = conexion.getConnection()) {
+            conn.setAutoCommit(false); // Desactiva autocommit
 
-            stmt.setInt(1, actividad.getIdPaquete());
-            stmt.setString(2, actividad.getNombre());
-            stmt.setString(3, actividad.getDescripcion());
-            stmt.setDouble(4, actividad.getCostoAdicional());
+            try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+                stmt.setInt(1, actividad.getIdPaquete());
+                stmt.setString(2, actividad.getNombre());
+                stmt.setString(3, actividad.getDescripcion());
+                stmt.setDouble(4, actividad.getCostoAdicional());
 
-            stmt.executeUpdate();
+                stmt.executeUpdate();
+                conn.commit(); // Si todo va bien, confirma los cambios
+                System.out.println("Actividad insertada correctamente.");
+
+            } catch (SQLException e) {
+                conn.rollback(); // Rollback si falla algo en la ejecución
+                System.out.println("Error al insertar la actividad: " + e.getMessage());
+                System.out.println("Transacción revertida.");
+            } finally {
+                conn.setAutoCommit(true); // Restaurar autocommit para no afectar otras operaciones
+            }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            e.printStackTrace(); // Errores en la conexión o en el rollback
         }
     }
+
+
+
+
+
 
     @Override
     public Actividad obtenerPorId(int id) {
@@ -43,10 +59,10 @@ public class ActividadSQL implements ActividadDAO {
             if (rs.next()) {
                 actividad = new Actividad(
                         rs.getInt("id"),
-                        rs.getInt("idPaquete"),
+                        rs.getInt("id_paquete"),
                         rs.getString("nombre"),
                         rs.getString("descripcion"),
-                        rs.getDouble("costoAdicional")
+                        rs.getDouble("costo_adicional")
                 );
             }
 
@@ -69,10 +85,10 @@ public class ActividadSQL implements ActividadDAO {
             while (rs.next()) {
                 Actividad actividad = new Actividad(
                         rs.getInt("id"),
-                        rs.getInt("idPaquete"),
+                        rs.getInt("id_paquete"),
                         rs.getString("nombre"),
                         rs.getString("descripcion"),
-                        rs.getDouble("costoAdicional")
+                        rs.getDouble("costo_adicional")
                 );
                 actividades.add(actividad);
             }
@@ -86,7 +102,7 @@ public class ActividadSQL implements ActividadDAO {
 
     @Override
     public List<Actividad> obtenerPorPaquete(int idPaquete) {
-        String sql = "SELECT * FROM Actividad WHERE idPaquete = ?";
+        String sql = "SELECT * FROM Actividad WHERE id_paquete = ?";
         List<Actividad> actividades = new ArrayList<>();
 
         try (Connection conn = conexion.getConnection();
@@ -98,10 +114,10 @@ public class ActividadSQL implements ActividadDAO {
             while (rs.next()) {
                 Actividad actividad = new Actividad(
                         rs.getInt("id"),
-                        rs.getInt("idPaquete"),
+                        rs.getInt("id_paquete"),
                         rs.getString("nombre"),
                         rs.getString("descripcion"),
-                        rs.getDouble("costoAdicional")
+                        rs.getDouble("costo_adicional")
                 );
                 actividades.add(actividad);
             }
@@ -115,7 +131,7 @@ public class ActividadSQL implements ActividadDAO {
 
     @Override
     public void actualizar(Actividad actividad) {
-        String sql = "UPDATE Actividad SET idPaquete = ?, nombre = ?, descripcion = ?, costoAdicional = ? WHERE id = ?";
+        String sql = "UPDATE Actividad SET id_paquete = ?, nombre = ?, descripcion = ?, costo_adicional = ? WHERE id = ?";
 
         try (Connection conn = conexion.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {

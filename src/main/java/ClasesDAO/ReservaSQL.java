@@ -12,7 +12,7 @@ public class ReservaSQL implements ReservaDAO {
 
     @Override
     public void insertar(Reserva reserva) {
-        String sql = "INSERT INTO Reserva (idCliente, idPaquete, fechaReserva, estado) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO Reserva (id_cliente, id_paquete, fecha_reserva, estado) VALUES (?, ?, ?, ?)";
 
         try (Connection conn = conexion.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -43,9 +43,9 @@ public class ReservaSQL implements ReservaDAO {
             if (rs.next()) {
                 reserva = new Reserva(
                         rs.getInt("id"),
-                        rs.getInt("idCliente"),
-                        rs.getInt("idPaquete"),
-                        rs.getDate("fechaReserva").toLocalDate(),
+                        rs.getInt("id_cliente"),
+                        rs.getInt("id_paquete"),
+                        rs.getDate("fecha_reserva").toLocalDate(),
                         rs.getString("estado")
                 );
             }
@@ -69,8 +69,8 @@ public class ReservaSQL implements ReservaDAO {
             while (rs.next()) {
                 Reserva reserva = new Reserva(
                         rs.getInt("id"),
-                        rs.getInt("idCliente"),
-                        rs.getInt("idPaquete"),
+                        rs.getInt("id_cliente"),
+                        rs.getInt("id_paquete"),
                         rs.getDate("fechaReserva").toLocalDate(),
                         rs.getString("estado")
                 );
@@ -86,7 +86,7 @@ public class ReservaSQL implements ReservaDAO {
 
     @Override
     public List<Reserva> obtenerPorCliente(int idCliente) {
-        String sql = "SELECT * FROM Reserva WHERE idCliente = ?";
+        String sql = "SELECT * FROM Reserva WHERE id_cliente = ?";
         List<Reserva> reservas = new ArrayList<>();
 
         try (Connection conn = conexion.getConnection();
@@ -98,9 +98,9 @@ public class ReservaSQL implements ReservaDAO {
             while (rs.next()) {
                 Reserva reserva = new Reserva(
                         rs.getInt("id"),
-                        rs.getInt("idCliente"),
-                        rs.getInt("idPaquete"),
-                        rs.getDate("fechaReserva").toLocalDate(),
+                        rs.getInt("id_cliente"),
+                        rs.getInt("id_paquete"),
+                        rs.getDate("fecha_reserva").toLocalDate(),
                         rs.getString("estado")
                 );
                 reservas.add(reserva);
@@ -115,7 +115,7 @@ public class ReservaSQL implements ReservaDAO {
 
     @Override
     public void actualizar(Reserva reserva) {
-        String sql = "UPDATE Reserva SET idCliente = ?, idPaquete = ?, fechaReserva = ?, estado = ? WHERE id = ?";
+        String sql = "UPDATE Reserva SET id_cliente = ?, id_paquete = ?, fecha_reserva = ?, estado = ? WHERE id = ?";
 
         try (Connection conn = conexion.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {

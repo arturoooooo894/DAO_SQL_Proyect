@@ -34,5 +34,17 @@ public class Reserva {
 
     public String getEstado() { return estado; }
     public void setEstado(String estado) { this.estado = estado; }
+
+    @Override
+    public String toString() {
+        return "Reserva{" +
+                "id=" + id +
+                ", idCliente=" + idCliente +
+                ", idPaquete=" + idPaquete +
+                ", fechaReserva=" + fechaReserva +
+                ", estado='" + estado + '\'' +
+                '}';
+    }
+
 }
 

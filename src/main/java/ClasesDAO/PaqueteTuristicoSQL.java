@@ -12,7 +12,7 @@ public class PaqueteTuristicoSQL implements PaqueteTuristicoDAO {
 
     @Override
     public void insertar(PaqueteTuristico paquete) {
-        String sql = "INSERT INTO PaqueteTuristico (nombre, destino, precio, duracionDias) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO paquete_turistico (nombre, destino, precio, duracion_dias) VALUES (?, ?, ?, ?)";
 
         try (Connection conn = conexion.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -31,7 +31,7 @@ public class PaqueteTuristicoSQL implements PaqueteTuristicoDAO {
 
     @Override
     public PaqueteTuristico obtenerPorId(int id) {
-        String sql = "SELECT * FROM PaqueteTuristico WHERE id = ?";
+        String sql = "SELECT * FROM paquete_turistico WHERE id = ?";
         PaqueteTuristico paquete = null;
 
         try (Connection conn = conexion.getConnection();
@@ -46,7 +46,7 @@ public class PaqueteTuristicoSQL implements PaqueteTuristicoDAO {
                         rs.getString("nombre"),
                         rs.getString("destino"),
                         rs.getDouble("precio"),
-                        rs.getInt("duracionDias")
+                        rs.getInt("duracion_dias")
                 );
             }
 
@@ -59,7 +59,7 @@ public class PaqueteTuristicoSQL implements PaqueteTuristicoDAO {
 
     @Override
     public List<PaqueteTuristico> obtenerTodos() {
-        String sql = "SELECT * FROM PaqueteTuristico";
+        String sql = "SELECT * FROM paquete_turistico";
         List<PaqueteTuristico> paquetes = new ArrayList<>();
 
         try (Connection conn = conexion.getConnection();
@@ -72,7 +72,7 @@ public class PaqueteTuristicoSQL implements PaqueteTuristicoDAO {
                         rs.getString("nombre"),
                         rs.getString("destino"),
                         rs.getDouble("precio"),
-                        rs.getInt("duracionDias")
+                        rs.getInt("duracion_dias")
                 );
                 paquetes.add(paquete);
             }
@@ -86,7 +86,7 @@ public class PaqueteTuristicoSQL implements PaqueteTuristicoDAO {
 
     @Override
     public void actualizar(PaqueteTuristico paquete) {
-        String sql = "UPDATE PaqueteTuristico SET nombre = ?, destino = ?, precio = ?, duracionDias = ? WHERE id = ?";
+        String sql = "UPDATE paquete_turistico SET nombre = ?, destino = ?, precio = ?, duracion_dias = ? WHERE id = ?";
 
         try (Connection conn = conexion.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -106,7 +106,7 @@ public class PaqueteTuristicoSQL implements PaqueteTuristicoDAO {
 
     @Override
     public void eliminar(int id) {
-        String sql = "DELETE FROM PaqueteTuristico WHERE id = ?";
+        String sql = "DELETE FROM paquete_turistico WHERE id = ?";
 
         try (Connection conn = conexion.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {

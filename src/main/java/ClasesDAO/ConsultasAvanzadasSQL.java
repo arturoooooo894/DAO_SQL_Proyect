@@ -35,8 +35,8 @@ public class ConsultasAvanzadasSQL {
         List<String> reservas = new ArrayList<>();
         String sql = """
                 SELECT r.id, p.nombre AS paquete, r.fecha_reserva, r.estado
-                FROM Reserva r
-                JOIN PaqueteTuristico p ON r.id_paquete = p.id
+                FROM reserva r
+                JOIN paquete_turistico p ON r.id_paquete = p.id
                 WHERE r.id_cliente = ?""";
 
         try (PreparedStatement stmt = conexion.getConnection().prepareStatement(sql)) {
@@ -63,7 +63,7 @@ public class ConsultasAvanzadasSQL {
         String sql = """
                 SELECT p.destino, COUNT(*) AS total_reservas
                 FROM Reserva r
-                JOIN PaqueteTuristico p ON r.id_paquete = p.id
+                JOIN paquete_turistico p ON r.id_paquete = p.id
                 GROUP BY p.destino
                 ORDER BY total_reservas DESC""";
 

@@ -32,5 +32,17 @@ public class PaqueteTuristico {
 
     public int getDuracionDias() { return duracionDias; }
     public void setDuracionDias(int duracionDias) { this.duracionDias = duracionDias; }
+
+    @Override
+    public String toString() {
+        return "PaqueteTuristico{" +
+                "id=" + id +
+                ", nombre='" + nombre + '\'' +
+                ", destino='" + destino + '\'' +
+                ", precio=" + precio +
+                ", duracionDias=" + duracionDias +
+                '}';
+    }
+
 }
 
